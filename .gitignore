@@ -120,8 +120,6 @@ dist
 .dynamodb/
 
 .astro/
-public/admin/config.yml
-public/uploads/
 
 # TernJS port file
 .tern-port

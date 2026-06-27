@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - content
   workflow_dispatch:
 
 permissions:
@@ -18,17 +17,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source from main
+      - name: Checkout source
         uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Fetch content branch
-        run: git fetch origin content:refs/remotes/origin/content || true
-
-      - name: Use content branch content
-        run: node scripts/sync-content-branch.mjs
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -41,9 +31,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          DECAP_GITHUB_CLIENT_ID: ${{ secrets.DECAP_GITHUB_CLIENT_ID }}
-          DECAP_OAUTH_BASE_URL: ${{ secrets.DECAP_OAUTH_BASE_URL }}
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
