@@ -26,7 +26,6 @@ const homeData = home?.data ?? {
       <a href="#games">Games</a>
       <a href="#engine">FPE</a>
       <a href={homeData.itchUrl} target="_blank" rel="noopener noreferrer">Itch.io</a>
-      <a href="/admin/">CMS</a>
     </nav>
   </header>
 
@@ -34,6 +33,7 @@ const homeData = home?.data ?? {
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-art" aria-hidden="true">
         <img src={featured.data.heroImage} alt="" />
+        <span class="concept-label">Concept art</span>
       </div>
       <div class="hero-copy">
         <p class="eyebrow">{homeData.eyebrow}</p>
@@ -70,10 +70,13 @@ const homeData = home?.data ?? {
                   ))}
                 </ul>
               </div>
-              <div class="gallery" aria-label={`${game.data.title} concept art`}>
-                {game.data.gallery.slice(0, 6).map((item) => (
-                  <img src={item.image} alt={item.alt} loading="lazy" />
-                ))}
+              <div class="game-art">
+                <p class="concept-note">Concept art, not final game art</p>
+                <div class="gallery" aria-label={`${game.data.title} concept art`}>
+                  {game.data.gallery.slice(0, 6).map((item) => (
+                    <img src={item.image} alt={item.alt} loading="lazy" />
+                  ))}
+                </div>
               </div>
             </article>
           ))
@@ -81,8 +84,9 @@ const homeData = home?.data ?? {
       </div>
 
       <aside class="art-note">
-        Concept art shown here includes exploratory AI-generated images. Final game art will be human-directed and
-        production-made; if AI is used later, it will be a small, clearly handled part of the overall art process.
+        All game art shown on this page is concept art and should not be read as final game art. Some concept images
+        are exploratory AI-generated images. Final game art will be human-directed and production-made; if AI is used
+        later, it will be a small, clearly handled part of the overall art process.
       </aside>
     </section>
 

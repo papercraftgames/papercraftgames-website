@@ -20,6 +20,8 @@ npm run build
 
 The public site is built from source on `main` plus editable content from the `content` branch. Decap CMS is available at `/admin/` and writes Markdown to `src/content` and uploads to `public/uploads` on the `content` branch.
 
+The CMS route is intentionally not linked from the public site navigation. Local `/admin/` should render the Decap shell, but GitHub login will not work unless the Decap OAuth proxy is available and the values below are configured.
+
 GitHub authentication for Decap needs an OAuth proxy because GitHub does not allow a static-only site to complete the OAuth code exchange safely. Configure these GitHub Actions secrets:
 
 - `DECAP_GITHUB_CLIENT_ID`: the Client ID from the GitHub OAuth App used by the Decap OAuth proxy.
