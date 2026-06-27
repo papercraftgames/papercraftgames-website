@@ -29,3 +29,17 @@ Be professional.
 Do high-end work.
 Reach out if you need human made art or something for the website.
 Be smart.
+
+## Progress
+
+- [x] Replace the `docs/` placeholder website with an Astro source tree at the repository root.
+- [x] Move existing brand assets, icons, and `CNAME` into `public/`.
+- [x] Add game content from the supplied Entailed and Upcoming Magical Adventure PDFs.
+- [x] Incorporate supplied concept art into the game sections.
+- [x] Add the AI concept-art disclaimer requested in the plan.
+- [x] Add Folded Paper Engine positioning and links based on the existing FPE website.
+- [x] Add Decap CMS at `/admin/` with editable game and site copy collections.
+- [x] Configure Decap to write content to the `content` branch.
+- [x] Add GitHub Actions deployment that builds from `main` source plus `content` branch content and deploys a clean `dist/` to `gh-pages`.
+- [x] Document required CMS OAuth secrets in `README.md`.
+- [x] Validate with `npm run check`, `npm run build`, and local desktop/mobile Playwright screenshots.

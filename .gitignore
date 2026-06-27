@@ -119,6 +119,10 @@ dist
 # DynamoDB Local files
 .dynamodb/
 
+.astro/
+public/admin/config.yml
+public/uploads/
+
 # TernJS port file
 .tern-port
 
