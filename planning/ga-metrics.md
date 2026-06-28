@@ -2,6 +2,12 @@
 
 Track GA visits and many common events.
 
+## Status
+
+- Implemented Google Analytics tag for `G-425W92QKYY`.
+- Added event tracking for navigation clicks, CTA clicks, footer/outbound clicks, scroll depth, section views, and game panel views.
+- Validated with `npm run check` and `npm run build`.
+
 GA Code:
 
 ```
