@@ -10,6 +10,8 @@ const {
   title = 'Papercraft Games',
   description = 'Cozy handmade games from Papercraft Games, built with the Folded Paper Engine toolchain.',
 } = Astro.props;
+
+const googleAnalyticsId = 'G-425W92QKYY';
 ---
 
 <!doctype html>
@@ -28,8 +30,107 @@ const {
     <link rel="shortcut icon" href="/icons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/icons/site.webmanifest" />
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+    <script is:inline define:vars={{ googleAnalyticsId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', googleAnalyticsId);
+    </script>
   </head>
   <body>
     <slot />
+    <script is:inline>
+      (() => {
+        const sendEvent = (name, params = {}) => {
+          if (typeof window.gtag !== 'function') {
+            return;
+          }
+
+          window.gtag('event', name, params);
+        };
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+
+          if (!(target instanceof Element)) {
+            return;
+          }
+
+          const link = target.closest('a[href]');
+
+          if (!link) {
+            return;
+          }
+
+          const url = new URL(link.href, window.location.href);
+          const isOutbound = url.origin !== window.location.origin;
+          const eventName = link.dataset.analyticsEvent || (isOutbound ? 'outbound_click' : 'link_click');
+          const eventCategory = link.dataset.analyticsCategory || (isOutbound ? 'outbound' : 'navigation');
+          const eventLabel = link.dataset.analyticsLabel || (link.textContent || '').trim() || url.pathname || url.href;
+
+          sendEvent(eventName, {
+            event_category: eventCategory,
+            event_label: eventLabel,
+            link_url: url.href,
+            link_domain: url.hostname,
+            outbound: isOutbound,
+          });
+        });
+
+        const scrollDepths = [25, 50, 75, 90, 100];
+        const sentDepths = new Set();
+        const trackScrollDepth = () => {
+          const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+
+          if (scrollable <= 0) {
+            return;
+          }
+
+          const depth = Math.min(100, Math.round((window.scrollY / scrollable) * 100));
+
+          scrollDepths.forEach((threshold) => {
+            if (depth >= threshold && !sentDepths.has(threshold)) {
+              sentDepths.add(threshold);
+              sendEvent('scroll_depth', {
+                event_category: 'engagement',
+                event_label: `${threshold}%`,
+                percent_scrolled: threshold,
+              });
+            }
+          });
+        };
+
+        window.addEventListener('scroll', trackScrollDepth, { passive: true });
+        trackScrollDepth();
+
+        if ('IntersectionObserver' in window) {
+          const observedElements = document.querySelectorAll('[data-analytics-view]');
+          const seenElements = new Set();
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || seenElements.has(entry.target)) {
+                  return;
+                }
+
+                seenElements.add(entry.target);
+                sendEvent(entry.target.dataset.analyticsView, {
+                  event_category: entry.target.dataset.analyticsCategory || 'engagement',
+                  event_label: entry.target.dataset.analyticsLabel || entry.target.id || entry.target.tagName.toLowerCase(),
+                });
+                observer.unobserve(entry.target);
+              });
+            },
+            { threshold: 0.45 },
+          );
+
+          observedElements.forEach((element) => observer.observe(element));
+        }
+      })();
+    </script>
   </body>
 </html>

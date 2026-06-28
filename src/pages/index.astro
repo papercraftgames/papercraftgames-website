@@ -23,14 +23,28 @@ const homeData = home?.data ?? {
       <img src="/images/papercraft-games-logo.png" alt="Papercraft Games" />
     </a>
     <nav class="top-nav" aria-label="Primary navigation">
-      <a href="#games">Games</a>
-      <a href="#engine">FPE</a>
-      <a href={homeData.itchUrl} target="_blank" rel="noopener noreferrer">Itch.io</a>
+      <a href="#games" data-analytics-event="nav_click" data-analytics-label="Games">Games</a>
+      <a href="#engine" data-analytics-event="nav_click" data-analytics-label="FPE">FPE</a>
+      <a
+        href={homeData.itchUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-analytics-event="nav_click"
+        data-analytics-category="outbound"
+        data-analytics-label="Itch.io"
+      >
+        Itch.io
+      </a>
     </nav>
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
+    <section
+      class="hero"
+      aria-labelledby="hero-title"
+      data-analytics-view="section_view"
+      data-analytics-label="Hero"
+    >
       <div class="hero-art" aria-hidden="true">
         <img src={featured.data.heroImage} alt="" />
         <span class="concept-label">Concept art</span>
@@ -40,15 +54,31 @@ const homeData = home?.data ?? {
         <h1 id="hero-title">{homeData.title}</h1>
         <p class="lede">{homeData.lede}</p>
         <div class="hero-actions">
-          <a class="button primary" href="#games">Explore games</a>
-          <a class="button secondary" href={homeData.itchUrl} target="_blank" rel="noopener noreferrer">
+          <a class="button primary" href="#games" data-analytics-event="cta_click" data-analytics-label="Explore games">
+            Explore games
+          </a>
+          <a
+            class="button secondary"
+            href={homeData.itchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-analytics-event="cta_click"
+            data-analytics-category="outbound"
+            data-analytics-label="Visit Itch.io"
+          >
             Visit Itch.io
           </a>
         </div>
       </div>
     </section>
 
-    <section id="games" class="section games-section" aria-labelledby="games-title">
+    <section
+      id="games"
+      class="section games-section"
+      aria-labelledby="games-title"
+      data-analytics-view="section_view"
+      data-analytics-label="Games"
+    >
       <div class="section-heading">
         <p class="eyebrow">In development</p>
         <h2 id="games-title">Small worlds with useful details</h2>
@@ -57,7 +87,12 @@ const homeData = home?.data ?? {
       <div class="game-list">
         {
           games.map((game) => (
-            <article class="game-panel" id={game.id}>
+            <article
+              class="game-panel"
+              id={game.id}
+              data-analytics-view="game_view"
+              data-analytics-label={game.data.title}
+            >
               <div class="game-copy">
                 <p class="status">{game.data.status}</p>
                 <h3>{game.data.title}</h3>
@@ -90,7 +125,13 @@ const homeData = home?.data ?? {
       </aside>
     </section>
 
-    <section id="engine" class="section engine-section" aria-labelledby="engine-title">
+    <section
+      id="engine"
+      class="section engine-section"
+      aria-labelledby="engine-title"
+      data-analytics-view="section_view"
+      data-analytics-label="Folded Paper Engine"
+    >
       <div class="engine-card">
         <div class="engine-copy">
           <p class="eyebrow">Open-source toolchain</p>
@@ -101,7 +142,15 @@ const homeData = home?.data ?? {
             scenes with players, triggers, physics, audio, inventory items, scene metadata, and animation events.
           </p>
           <div class="engine-actions">
-            <a class="button primary" href={homeData.fpeUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              class="button primary"
+              href={homeData.fpeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="cta_click"
+              data-analytics-category="outbound"
+              data-analytics-label="Explore FPE"
+            >
               Explore FPE
             </a>
             <a
@@ -109,6 +158,9 @@ const homeData = home?.data ?? {
               href="https://github.com/papercraftgames/folded-paper-engine"
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="cta_click"
+              data-analytics-category="outbound"
+              data-analytics-label="FPE GitHub"
             >
               GitHub
             </a>
@@ -124,9 +176,36 @@ const homeData = home?.data ?? {
     <div>
       <p>Papercraft Games</p>
       <nav aria-label="Footer links">
-        <a href={homeData.itchUrl} target="_blank" rel="noopener noreferrer">Itch.io</a>
-        <a href={homeData.fpeUrl} target="_blank" rel="noopener noreferrer">Folded Paper Engine</a>
-        <a href="https://github.com/papercraftgames" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a
+          href={homeData.itchUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="footer_click"
+          data-analytics-category="outbound"
+          data-analytics-label="Itch.io"
+        >
+          Itch.io
+        </a>
+        <a
+          href={homeData.fpeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="footer_click"
+          data-analytics-category="outbound"
+          data-analytics-label="Folded Paper Engine"
+        >
+          Folded Paper Engine
+        </a>
+        <a
+          href="https://github.com/papercraftgames"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-event="footer_click"
+          data-analytics-category="outbound"
+          data-analytics-label="GitHub"
+        >
+          GitHub
+        </a>
       </nav>
     </div>
   </footer>
